@@ -1,0 +1,8 @@
+{
+  "session_id": "75656022-e399-4da2-92a9-a6221f310db1",
+  "prompts": [
+    "We need to create a new repo under my GitHub account which is github.com/nmitch17. Create a new repo called Ourchother.",
+    "/init "
+  ],
+  "agent_name": "Atlas"
+}

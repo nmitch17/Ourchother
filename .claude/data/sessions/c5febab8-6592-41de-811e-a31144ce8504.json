@@ -1,0 +1,8 @@
+{
+  "session_id": "c5febab8-6592-41de-811e-a31144ce8504",
+  "prompts": [
+    "Read the files in the /specs folder and create a plan based on the feature/command. This is a new app that we're building, so understand this completely and review the power each other-tasks.md. Make any changes that need to be made. This should be a plan that can be followed by a junior developer to reliably implement all of this correctly. ",
+    "Read the files in the /specs folder and create a plan based on the feature/command. This is a new app that we're building, so understand this completely and review the ourchother-tasks.md. Make any changes that need to be made. This should be a plan that can be followed by a junior developer to reliably implement all of this correctly. "
+  ],
+  "agent_name": "Helix"
+}

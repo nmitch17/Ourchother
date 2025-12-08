@@ -1,0 +1,9 @@
+{
+  "session_id": "ff211288-cc8c-491f-9335-94c1a2ca0e1b",
+  "prompts": [
+    "/start ",
+    "I am being redirected to a sign-in page when I navigate to localhost:3002. Is there a test user, or how would I set this up? I need to set up just one admin user. So should I just create a user manually in the Supabase table for auth, or how would I do this? ",
+    "Mark off completed tasks in ourchother-tasks.md. Use check boxes at the beginning of each line of each task and subtask. "
+  ],
+  "agent_name": "Zenith"
+}

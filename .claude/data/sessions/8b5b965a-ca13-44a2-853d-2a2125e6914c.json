@@ -1,0 +1,8 @@
+{
+  "session_id": "8b5b965a-ca13-44a2-853d-2a2125e6914c",
+  "prompts": [
+    "Continue implementing ourchother-tasks.md \\\n1.13-1.17 Admin Pages\\\n\\\nDid we miss: 0.9 Update Tailwind Config ?",
+    "We need to be able to create projects before the onboarding happens. There's going to be a lot of context and information and things that I need to be able to add in about a project. We don't want the flow to be onboard and then convert into a project. We need it to be onboard, and then independently, you can also create a project. But we need to be able to import (have an import) to a project from onboard submissions. This can be something that's an action, a button that you press, that is a one-time migration or import that fills in the corresponding data. Any data that is let's in the project should have a section that's hideable (maybe a tab component) so that we can see or maybe just a subpage where we can see the clients' onboarding information. Whatever they're onboard submission is, it shouldn't be front-center all the time, but you should be able to go see it. "
+  ],
+  "agent_name": "Helix"
+}

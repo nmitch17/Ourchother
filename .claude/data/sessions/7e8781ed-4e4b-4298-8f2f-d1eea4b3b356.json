@@ -1,0 +1,10 @@
+{
+  "session_id": "7e8781ed-4e4b-4298-8f2f-d1eea4b3b356",
+  "prompts": [
+    "/commit ",
+    "Push to the remote repository. ",
+    "Make the public-facing project page password visible in the admin project dashboard. So I want to see name, a URL that's clickable to navigate to the public-facing page, and the password for that. All the time. I don't want it to go away. As an admin, I need to know what the password is so I can give it to the user. Make it clickable with a little copy icon next to it so that I can click on it and it's copied to my clipboard. ",
+    "No, no, no, there's already a card in the bottom left of that screen. Don't make a new component. Get rid of this component you just made.\n\nAlso, the password that's in there is completely absurd and ridiculous. That's not the password. There should be a password that's saved for each project, right? It should be like the slug and then 4 digits. You just put in a 40 character weird crazy password that is invalid. Don't do that. "
+  ],
+  "agent_name": "Aurora"
+}
