@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Ourchother",
-  description: "Project management platform",
+  title: "Ourchother | AI-Native Agency for Growth",
+  description: "Multimodal agency providing AI-first consulting, strategic business guidance, and custom development. Growing abundant businesses together.",
 };
 
 export default function RootLayout({
@@ -25,7 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
+        style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
       >
         {children}
       </body>

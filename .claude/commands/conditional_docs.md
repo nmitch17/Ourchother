@@ -91,3 +91,12 @@ This prompt helps you determine what documentation you should read based on the 
     - When working with the OURCHOTHER_CLIENT_ID constant
     - When running database migrations for the projects table
     - When troubleshooting project client_id validation errors
+
+- app_docs/feature-landing-page.md
+  - Conditions:
+    - When modifying the landing page at src/app/page.tsx
+    - When working with the organic color system (soil, sand, leaf colors)
+    - When adding or modifying service cards
+    - When working with Iconify/Clarity icons
+    - When updating fonts or typography
+    - When modifying CSS animations in globals.css

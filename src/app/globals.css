@@ -1,33 +1,206 @@
 @import 'https://unpkg.com/css.gg/icons/all.css';
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Our Each Other - Organic Growth Color System */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Earth & Soil Tones */
+  --color-soil-deep: #2c2416;
+  --color-soil-rich: #3d3222;
+  --color-soil-warm: #5c4a32;
+  --color-soil-light: #7a6548;
 
-  /* Custom accent colors */
-  --color-accent: #3b82f6;
-  --color-accent-hover: #2563eb;
-  --color-accent-light: #dbeafe;
-  --color-accent-text: #1e40af;
+  /* Sand & Tan Tones */
+  --color-sand-deep: #a8916f;
+  --color-sand-warm: #c4a882;
+  --color-sand-light: #ddc9a3;
+  --color-sand-pale: #f0e6d3;
+  --color-sand-cream: #faf6ef;
+
+  /* Fertile Green Foliage */
+  --color-leaf-deep: #2d4a2a;
+  --color-leaf-rich: #3d6439;
+  --color-leaf-vibrant: #4d7c48;
+  --color-leaf-fresh: #6b9b5d;
+  --color-leaf-young: #8ab878;
+  --color-leaf-tender: #b8d4a8;
+
+  /* Accent & Highlight */
+  --color-growth-gold: #d4a855;
+  --color-sunlight: #e8c97a;
+  --color-morning-dew: #c8e0c4;
+
+  /* Font families */
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  /* CSS variables for use in SVGs and custom styles */
+  --soil-deep: #2c2416;
+  --soil-rich: #3d3222;
+  --soil-warm: #5c4a32;
+  --soil-light: #7a6548;
+  --sand-deep: #a8916f;
+  --sand-warm: #c4a882;
+  --sand-light: #ddc9a3;
+  --sand-pale: #f0e6d3;
+  --sand-cream: #faf6ef;
+  --leaf-deep: #2d4a2a;
+  --leaf-rich: #3d6439;
+  --leaf-vibrant: #4d7c48;
+  --leaf-fresh: #6b9b5d;
+  --leaf-young: #8ab878;
+  --leaf-tender: #b8d4a8;
+  --growth-gold: #d4a855;
+  --sunlight: #e8c97a;
+  --morning-dew: #c8e0c4;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--sand-cream);
+  color: var(--soil-deep);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Keyframe Animations */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes grow-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes unfurl {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8) translateY(10px);
+    transform-origin: bottom;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+/* Animation utility classes */
+.animate-grow-in {
+  animation: grow-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-unfurl {
+  animation: unfurl 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-float {
+  animation: gentle-float 6s ease-in-out infinite;
+}
+
+.animate-sway {
+  animation: sway 8s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sunlight) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* Initially hidden for animation */
+.animate-initial {
+  opacity: 0;
+}
+
+/* Organic texture overlays */
+.texture-grain {
+  position: relative;
+}
+
+.texture-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Gradient backgrounds */
+.gradient-earth {
+  background: linear-gradient(
+    180deg,
+    var(--sand-cream) 0%,
+    var(--sand-pale) 40%,
+    var(--sand-light) 100%
+  );
+}
+
+.gradient-growth {
+  background: linear-gradient(
+    135deg,
+    var(--leaf-tender) 0%,
+    var(--leaf-young) 50%,
+    var(--leaf-fresh) 100%
+  );
+}
+
+/* Selection styling */
+::selection {
+  background: var(--leaf-tender);
+  color: var(--soil-deep);
 }
