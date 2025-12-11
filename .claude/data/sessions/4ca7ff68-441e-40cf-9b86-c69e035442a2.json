@@ -1,0 +1,9 @@
+{
+  "session_id": "4ca7ff68-441e-40cf-9b86-c69e035442a2",
+  "prompts": [
+    "Complete the tasks remaining to be done in specs/ourchother-tasks.md",
+    "Continue",
+    "/start "
+  ],
+  "agent_name": "Flux"
+}

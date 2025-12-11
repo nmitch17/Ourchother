@@ -7,7 +7,8 @@
     "/document ",
     "What does it mean that the git repo is at the parent directory level? Does that mean it's at my user level on my machine? If so, we need to adjust it so that the git repo is this folder, ourchother. ",
     "Do step 2. I already did 1",
-    "Push to https://github.com/nmitch17/Ourchother and make sure this is our remote repo"
+    "Push to https://github.com/nmitch17/Ourchother and make sure this is our remote repo",
+    "/document "
   ],
   "agent_name": "Quantum"
 }

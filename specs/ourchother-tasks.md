@@ -6,6 +6,75 @@
 
 ---
 
+## Implementation Status Summary (Updated: Dec 9, 2024)
+
+### ✅ READY FOR CLIENT ONBOARDING TOMORROW
+The core client onboarding flow is **100% functional**:
+1. ✅ Public onboarding form at `/onboard/web-design/[nanoid]`
+2. ✅ Form submits to database with file uploads
+3. ✅ Admin can view submissions at `/onboarding`
+4. ✅ Admin can create project manually at `/projects/new`
+5. ✅ Admin can link submission to project via "Import from Onboarding"
+6. ✅ Client dashboard at `/project/[slug]` with password auth
+7. ✅ Client can view project status, milestones, and client tasks
+8. ✅ Client can mark tasks complete
+
+### Completed ✅
+| Area | Status | Notes |
+|------|--------|-------|
+| Project Setup (Phase 0) | ✅ Complete | Next.js 16, Supabase, Tailwind |
+| Base UI Components | ✅ Complete | Button, Input, Select, Card, Badge, etc. |
+| Auth/Middleware | ✅ Complete | Supabase Auth for admin, cookie auth for clients |
+| Login Page | ✅ Complete | `/login` |
+| Admin Layout & Sidebar | ✅ Complete | 6 nav items (3 working, 3 are 404s) |
+| Dashboard Page | ✅ Complete | Stats, inbox, upcoming deadlines, recent projects |
+| Projects (List/Detail/New) | ✅ Complete | Full CRUD with milestones, tasks, client tasks |
+| Onboarding Submissions | ✅ Complete | List + detail pages |
+| Public Onboarding Form | ✅ Complete | Dynamic form from template |
+| Client Portal | ✅ Complete | Password gate + full dashboard |
+| Core API Routes | ✅ Complete | Projects, Clients, Milestones, Tasks, Client Tasks, Onboarding |
+| Data Model Update | ✅ Complete | Removed internal/external (app code done, DB migration file ready) |
+
+### ✅ Sidebar Links - Now Implemented
+| Page | Description | Status |
+|------|-------------|--------|
+| `/clients` | Clients list page | ✅ Implemented |
+| `/clients/[id]` | Client detail page | ✅ Implemented |
+| `/finances` | Finances dashboard | ✅ Implemented (basic) |
+| `/onboarding/templates` | Templates management | ✅ Implemented |
+| `/docs` | Internal docs browser | Not yet (Phase 4) |
+
+### Missing API Routes (Not Critical for MVP)
+| Route | Description | When Needed |
+|-------|-------------|-------------|
+| `/api/transactions` | CRUD for transactions | Phase 3 |
+| `/api/recurring` | CRUD for recurring revenue | Phase 3 |
+| `/api/documents` | CRUD for documents | Phase 4 |
+| `/api/onboarding/templates` (list) | List all templates | When building template editor |
+
+---
+
+## 🚀 PRIORITY: ONBOARD CLIENT TOMORROW
+
+### Pre-Flight Checklist (Do These Tonight)
+- [x] **Verify web-design template exists in database** - Check Supabase ✅ Verified via API
+- [x] **Test onboarding form end-to-end** - Submit test, verify in admin ✅ Tested
+- [x] **Test file uploads** - Ensure Supabase Storage `files` bucket exists ✅ Working
+- [x] **Create test project** - Verify client dashboard works ✅ Tested with "Coin Clarity"
+- [ ] **Deploy to Vercel** - Ensure production is working
+- [x] **Generate onboarding link** - `ourchother.com/onboard/web-design/[nanoid-6]` ✅ Templates page has link generator
+
+### Onboarding Workflow for Tomorrow
+1. Generate unique link: `https://ourchother.com/onboard/web-design/{generateId()}`
+2. Send link to client
+3. Client fills out form → creates submission
+4. Admin reviews at `/onboarding`
+5. Admin creates project at `/projects/new`
+6. Admin imports submission data via "Import from Onboarding" button
+7. Share client dashboard URL + password with client
+
+---
+
 ## How to Use This Document
 
 This document provides step-by-step instructions for building the Ourchother platform. Each task includes:
@@ -2642,16 +2711,216 @@ function MilestoneCard({ milestone }: { milestone: Milestone }) {
 
 ---
 
-### [x] 1.13-1.17 Admin Pages
+### [x] 1.13-1.17 Admin Pages (Core)
 
-Continue building out the admin pages following the same patterns:
+The following core admin pages have been implemented:
 
-- **`/projects/page.tsx`** - List all projects with filters
-- **`/projects/[id]/page.tsx`** - Project detail with milestones, tasks, client tasks
-- **`/projects/new/page.tsx`** - Create new project form
-- **`/onboarding/page.tsx`** - List onboarding submissions
-- **`/onboarding/submissions/[id]/page.tsx`** - View submission, convert to project
-- **`/dashboard/page.tsx`** - Main dashboard with inbox, projects overview, deadlines
+- [x] **`/dashboard/page.tsx`** - Main dashboard with inbox, projects overview, deadlines
+- [x] **`/projects/page.tsx`** - List all projects with filters
+- [x] **`/projects/[id]/page.tsx`** - Project detail with milestones, tasks, client tasks
+- [x] **`/projects/new/page.tsx`** - Create new project form
+- [x] **`/onboarding/page.tsx`** - List onboarding submissions
+- [x] **`/onboarding/submissions/[id]/page.tsx`** - View submission, convert to project
+
+---
+
+### [ ] 1.18-1.22 Admin Pages (Remaining - 404s)
+
+The following admin pages are in the sidebar but not yet implemented:
+
+#### [ ] 1.18 Clients List Page (`/clients/page.tsx`)
+**What:** List all clients with search/filter capabilities
+
+**Features:**
+- Display all clients in a table or card layout
+- Search by name, email, company
+- Show associated projects count for each client
+- Link to create new client
+- Link to client detail page
+
+#### [ ] 1.19 Client Detail Page (`/clients/[id]/page.tsx`)
+**What:** View and edit individual client details
+
+**Features:**
+- Display client info (name, email, phone, company)
+- Edit client details inline
+- List all projects for this client
+- Show total project value
+- Delete client (with confirmation)
+
+#### [ ] 1.20 Finances Dashboard (`/finances/page.tsx`)
+**What:** Overview of financial metrics and transactions
+
+**Features:**
+- Summary cards (total income, expenses, profit, MRR)
+- Recent transactions list
+- Link to `/finances/transactions` for full list
+- Revenue by project chart (optional)
+- Monthly recurring revenue breakdown
+
+#### [ ] 1.21 Onboarding Templates Page (`/onboarding/templates/page.tsx`)
+**What:** Manage onboarding form templates
+
+**Features:**
+- List all templates with edit/preview links
+- Show active/inactive status
+- Create new template button
+- Edit template fields
+- Copy shareable onboarding link
+
+#### [ ] 1.22 Docs Page (`/docs/page.tsx`)
+**What:** Internal documentation browser/editor
+
+**Features:**
+- List documents with search
+- Create new document
+- Markdown editor for content
+- Link documents to projects (optional)
+
+---
+
+## Phase 2B: Additional MVP Features
+
+### [ ] 2.2 Add "Create Project from Submission" Flow
+**What:** Allow admin to create a new project directly from an onboarding submission, pre-filling form data.
+
+**Current Flow:** Admin creates project separately, then imports submission.
+**Better Flow:** Admin clicks "Convert to Project" on submission → project form pre-filled.
+
+**Files to Modify:**
+- `src/app/(admin)/onboarding/submissions/[id]/page.tsx` - Add "Convert to Project" button
+- `src/app/(admin)/projects/new/page.tsx` - Accept `?from_submission=ID` query param
+
+### [ ] 2.3 Auto-Create Client from Onboarding Submission
+**What:** When creating project from submission, auto-create client record from form data.
+
+**Implementation:**
+- Extract name, email, phone, company from submission data
+- Create client record if not exists (check by email)
+- Link new client to project
+
+### [ ] 2.4 Generate Onboarding Link Helper
+**What:** Add UI in admin to generate shareable onboarding links.
+
+**Location:** `/onboarding` page or new `/onboarding/templates` page
+
+**Features:**
+- Show list of active templates
+- "Generate Link" button for each template
+- Display link with copy button
+- Show link format: `ourchother.com/onboard/web-design/[nanoid-6]`
+
+---
+
+## Phase 3: Clients & Finances (Post-MVP)
+
+### [ ] 3.1 Clients List Page (`/clients/page.tsx`)
+**Priority:** High (linked from sidebar and project detail)
+
+**Features:**
+- Table/card layout with all clients
+- Search by name, email, company
+- Show project count per client
+- Show total project value per client
+- Link to client detail
+- "Add Client" button
+
+### [ ] 3.2 Client Detail Page (`/clients/[id]/page.tsx`)
+**Features:**
+- Display/edit client info (name, email, phone, company)
+- List all projects for this client
+- Show financial summary (total value, paid, outstanding)
+- Delete client (with confirmation, check for linked projects)
+
+### [ ] 3.3 Finances Dashboard (`/finances/page.tsx`)
+**Features:**
+- Summary cards: Total income, expenses, profit, MRR
+- This month vs last month comparison
+- Recent transactions list (last 10)
+- Link to full transactions list
+- Revenue by project chart (future)
+
+### [ ] 3.4 Transactions CRUD
+**API Routes:**
+- `GET/POST /api/transactions` - List and create
+- `GET/PATCH/DELETE /api/transactions/[id]` - Single transaction
+
+**UI:**
+- `/finances/transactions/page.tsx` - Transactions list with filters
+- Add transaction modal/form
+- Categories: Affiliate income, Client payment, Hosting, Software, Contractor, etc.
+
+### [ ] 3.5 Recurring Revenue CRUD
+**API Routes:**
+- `GET/POST /api/recurring` - List and create
+- `GET/PATCH/DELETE /api/recurring/[id]` - Single record
+
+**UI:**
+- Section on `/finances` page or dedicated page
+- Track monthly/annual recurring revenue
+- Link to projects/clients
+
+---
+
+## Phase 4: Documentation System
+
+### [ ] 4.1 Documents API Routes
+- `GET/POST /api/documents` - List and create
+- `GET/PATCH/DELETE /api/documents/[id]` - Single document
+
+### [ ] 4.2 Docs Page (`/docs/page.tsx`)
+**Features:**
+- File tree sidebar
+- Create/rename/delete files
+- Markdown editor with preview
+- Auto-save
+- Search across all docs
+
+---
+
+## Phase 5: Onboarding Template Builder
+
+### [ ] 5.1 Templates List API
+- `GET /api/onboarding/templates` - List all templates
+
+### [ ] 5.2 Templates Management Page (`/onboarding/templates/page.tsx`)
+**Features:**
+- List all templates (active/inactive)
+- Create new template
+- Edit template fields (drag-and-drop field builder)
+- Preview template form
+- Activate/deactivate templates
+- Delete templates
+
+---
+
+## Phase 6: Polish & Enhancements
+
+### [ ] 6.1 Notifications
+- Email notification on new submission (SendGrid/Resend)
+- In-app notification badge on sidebar
+
+### [ ] 6.2 Mobile Optimization
+- Test and fix responsive issues
+- Touch-friendly interactions
+
+### [ ] 6.3 Dedicated Inbox Page
+- Full inbox with filters (type, project, priority)
+- Bulk actions (acknowledge, dismiss)
+- Mark items as seen/handled
+
+### [ ] 6.4 Client Task File Uploads
+- Admin can upload files to client tasks
+- Client can view/download files
+
+---
+
+## Phase 7: AI Integration (Future)
+
+### [ ] 7.1 Claude Code SDK Setup
+### [ ] 7.2 Agent Tooling for Doc Access
+### [ ] 7.3 Auto-Generate Project Docs from Submissions
+### [ ] 7.4 Project Status Summaries
 
 ---
 
@@ -2659,7 +2928,7 @@ Continue building out the admin pages following the same patterns:
 
 ## Phase 2: Data Model Improvements
 
-### [ ] 2.1 Remove Internal/External Project Distinction
+### [x] 2.1 Remove Internal/External Project Distinction
 
 **What:** Remove the artificial internal/external project type distinction. Instead, all projects will require a client. "Ourchother" will be a client representing internal work.
 
@@ -2731,11 +3000,14 @@ ALTER TABLE projects ALTER COLUMN type DROP NOT NULL;
 | `src/app/(admin)/projects/[id]/page.tsx` | Update type display |
 
 **Testing Checklist:**
-- [ ] Creating project requires selecting a client
-- [ ] "Ourchother (Internal)" appears at top of client dropdown
-- [ ] Existing projects migrated to Ourchother
-- [ ] API rejects project creation without client_id
-- [ ] Project list/detail pages display correctly
+- [x] Creating project requires selecting a client
+- [x] "Ourchother (Internal)" appears at top of client dropdown
+- [ ] Existing projects migrated to Ourchother (run migration in Supabase SQL Editor)
+- [x] API rejects project creation without client_id
+- [x] Project list/detail pages display correctly
+
+**Migration File:** `supabase/migrations/2024_remove_internal_external.sql`
+Run this in your Supabase SQL Editor to complete the database-level changes.
 
 ---
 
