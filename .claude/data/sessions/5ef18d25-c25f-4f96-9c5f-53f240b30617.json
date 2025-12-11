@@ -1,0 +1,8 @@
+{
+  "session_id": "5ef18d25-c25f-4f96-9c5f-53f240b30617",
+  "prompts": [
+    "Analyze the ourchother-tasks.md spec against what we've completed already. Make sure it's up to date that all the tasks that are done are checked off. And then summarize what still needs to be done because right now we still have several 404 pages that are placeholders in the admin. ",
+    "Update @specs/ourchother-tasks.md if need be, identify any other tasks that should be completed to fulfill the entire PRD @specs/ourchother-prd.md and create an updated set of tasks to complete. We need to be onboarding a client and sending them the onboarding form tomorrow morning. Let's go!"
+  ],
+  "agent_name": "Phoenix"
+}

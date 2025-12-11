@@ -74,3 +74,20 @@ This prompt helps you determine what documentation you should read based on the 
     - When troubleshooting user-submitted event avatars or tooltips
     - When working with submittedBy metadata for public form submissions
     - When modifying GROQ date range filters for events
+
+- app_docs/feature-initial-project-setup.md
+  - Conditions:
+    - When first understanding the Ourchother project structure
+    - When setting up the development environment
+    - When working with Supabase configuration or migrations
+    - When implementing new features that span admin/client/public routes
+    - When troubleshooting authentication flow (admin or client portal)
+
+- app_docs/feature-remove-internal-external-distinction.md
+  - Conditions:
+    - When working with project types (internal vs external)
+    - When creating or modifying project forms
+    - When filtering projects by client or type
+    - When working with the OURCHOTHER_CLIENT_ID constant
+    - When running database migrations for the projects table
+    - When troubleshooting project client_id validation errors
