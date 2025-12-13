@@ -1,206 +1,322 @@
 @import 'https://unpkg.com/css.gg/icons/all.css';
 @import "tailwindcss";
 
-/* Our Each Other - Organic Growth Color System */
-@theme inline {
-  /* Earth & Soil Tones */
-  --color-soil-deep: #2c2416;
-  --color-soil-rich: #3d3222;
-  --color-soil-warm: #5c4a32;
-  --color-soil-light: #7a6548;
-
-  /* Sand & Tan Tones */
-  --color-sand-deep: #a8916f;
-  --color-sand-warm: #c4a882;
-  --color-sand-light: #ddc9a3;
-  --color-sand-pale: #f0e6d3;
-  --color-sand-cream: #faf6ef;
-
-  /* Fertile Green Foliage */
-  --color-leaf-deep: #2d4a2a;
-  --color-leaf-rich: #3d6439;
-  --color-leaf-vibrant: #4d7c48;
-  --color-leaf-fresh: #6b9b5d;
-  --color-leaf-young: #8ab878;
-  --color-leaf-tender: #b8d4a8;
-
-  /* Accent & Highlight */
-  --color-growth-gold: #d4a855;
-  --color-sunlight: #e8c97a;
-  --color-morning-dew: #c8e0c4;
-
-  /* Font families */
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
+:root {
+  --background: #faf9f7;
+  --foreground: #1a1a1a;
+  --accent: #e85d04;
+  --accent-hover: #dc4c00;
+  --accent-light: #fff4ed;
+  --accent-text: #c43d00;
+  --muted: #6b6b6b;
+  --border: #f0ebe1;
+  --surface: #fffefd;
+  --sketch-line: rgba(0, 0, 0, 0.12);
+  --dot-color: rgba(0, 0, 0, 0.12);
+  --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-sans: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
 }
 
-:root {
-  /* CSS variables for use in SVGs and custom styles */
-  --soil-deep: #2c2416;
-  --soil-rich: #3d3222;
-  --soil-warm: #5c4a32;
-  --soil-light: #7a6548;
-  --sand-deep: #a8916f;
-  --sand-warm: #c4a882;
-  --sand-light: #ddc9a3;
-  --sand-pale: #f0e6d3;
-  --sand-cream: #faf6ef;
-  --leaf-deep: #2d4a2a;
-  --leaf-rich: #3d6439;
-  --leaf-vibrant: #4d7c48;
-  --leaf-fresh: #6b9b5d;
-  --leaf-young: #8ab878;
-  --leaf-tender: #b8d4a8;
-  --growth-gold: #d4a855;
-  --sunlight: #e8c97a;
-  --morning-dew: #c8e0c4;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: ui-monospace, monospace;
+
+  /* Custom accent colors */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-accent-text: var(--accent-text);
+}
+
+/* Dark mode - via class (manual toggle) */
+:root.dark {
+  --background: #0f0f0f;
+  --foreground: #f5f5f4;
+  --accent: #fb923c;
+  --accent-hover: #f97316;
+  --accent-light: #1c1917;
+  --accent-text: #fdba74;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --surface: #18181b;
+  --sketch-line: rgba(255, 255, 255, 0.15);
+  --dot-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Dark mode - via system preference (fallback when no class set) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    --background: #0f0f0f;
+    --foreground: #f5f5f4;
+    --accent: #fb923c;
+    --accent-hover: #f97316;
+    --accent-light: #1c1917;
+    --accent-text: #fdba74;
+    --muted: #a1a1aa;
+    --border: #27272a;
+    --surface: #18181b;
+    --sketch-line: rgba(255, 255, 255, 0.15);
+    --dot-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 body {
-  background: var(--sand-cream);
-  color: var(--soil-deep);
-  font-family: var(--font-body), system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
 }
 
-/* Keyframe Animations */
-@keyframes gentle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+/* Fix for native select dropdown options */
+select {
+  font-size: 16px !important;
+  -webkit-appearance: menulist;
+  appearance: menulist;
 }
 
-@keyframes grow-in {
-  0% {
+select option {
+  font-size: 16px;
+  font-family: var(--font-sans);
+  padding: 8px;
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+/* Serif headings - use the CSS variable from Next.js font loader */
+.font-serif {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Landing page specific styles */
+.landing-gradient {
+  position: relative;
+  overflow: hidden;
+  background:
+    /* Main warm glow from top */
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(232, 93, 4, 0.12), transparent 60%),
+    /* Secondary glow bottom right */
+    radial-gradient(ellipse 80% 60% at 95% 95%, rgba(232, 93, 4, 0.08), transparent 50%),
+    /* Subtle cool accent top right for depth */
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(59, 130, 246, 0.04), transparent 40%),
+    /* Base background */
+    var(--background);
+}
+
+/* Dot grid pattern overlay */
+.landing-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  min-height: 100vh;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 100% 60% at 50% 30%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 60% at 50% 30%, black 20%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.landing-gradient > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .landing-gradient {
+    background:
+      radial-gradient(ellipse 120% 80% at 50% -20%, rgba(251, 146, 60, 0.15), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 95% 95%, rgba(251, 146, 60, 0.08), transparent 50%),
+      radial-gradient(ellipse 50% 50% at 90% 10%, rgba(96, 165, 250, 0.05), transparent 40%),
+      var(--background);
+  }
+}
+
+/* Sketch-style card with hand-drawn border effect */
+.sketch-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Corner sketch marks */
+.sketch-card::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px dashed var(--sketch-line);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* Guide lines extending from corners */
+.sketch-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Top-left corner mark */
+    linear-gradient(to right, var(--sketch-line) 12px, transparent 12px),
+    linear-gradient(to bottom, var(--sketch-line) 12px, transparent 12px),
+    /* Top-right corner mark */
+    linear-gradient(to left, var(--sketch-line) 12px, transparent 12px) top right,
+    linear-gradient(to bottom, var(--sketch-line) 12px, transparent 12px) top right,
+    /* Bottom-left corner mark */
+    linear-gradient(to right, var(--sketch-line) 12px, transparent 12px) bottom left,
+    linear-gradient(to top, var(--sketch-line) 12px, transparent 12px) bottom left,
+    /* Bottom-right corner mark */
+    linear-gradient(to left, var(--sketch-line) 12px, transparent 12px) bottom right,
+    linear-gradient(to top, var(--sketch-line) 12px, transparent 12px) bottom right;
+  background-size: 1px 1px;
+  background-repeat: no-repeat;
+}
+
+/* Staggered animation for landing page */
+@keyframes fadeInUp {
+  from {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
+    transform: translateY(24px);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes unfurl {
-  0% {
-    opacity: 0;
-    transform: scaleY(0.8) translateY(10px);
-    transform-origin: bottom;
-  }
-  100% {
-    opacity: 1;
-    transform: scaleY(1) translateY(0);
-    transform-origin: bottom;
-  }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes pulse-soft {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-@keyframes sway {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
-}
-
-/* Animation utility classes */
-.animate-grow-in {
-  animation: grow-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.animate-fade-up {
-  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.animate-unfurl {
-  animation: unfurl 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.animate-float {
-  animation: gentle-float 6s ease-in-out infinite;
-}
-
-.animate-sway {
-  animation: sway 8s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--sunlight) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-/* Stagger delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-800 { animation-delay: 800ms; }
-
-/* Initially hidden for animation */
-.animate-initial {
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
   opacity: 0;
 }
 
-/* Organic texture overlays */
-.texture-grain {
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+
+/* Subtle hover lift */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .hover-lift:hover {
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Dot grid background - applies to any container */
+.dot-grid-bg {
   position: relative;
+  background: var(--background);
 }
 
-.texture-grain::before {
+.dot-grid-bg::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
   pointer-events: none;
-  mix-blend-mode: multiply;
+  z-index: 0;
 }
 
-/* Gradient backgrounds */
-.gradient-earth {
-  background: linear-gradient(
-    180deg,
-    var(--sand-cream) 0%,
-    var(--sand-pale) 40%,
-    var(--sand-light) 100%
-  );
+.dot-grid-bg > * {
+  position: relative;
+  z-index: 1;
 }
 
-.gradient-growth {
-  background: linear-gradient(
-    135deg,
-    var(--leaf-tender) 0%,
-    var(--leaf-young) 50%,
-    var(--leaf-fresh) 100%
-  );
+/* Admin layout with subtle gradient */
+.admin-bg {
+  position: relative;
+  background:
+    /* Subtle warm glow top-left */
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(232, 93, 4, 0.06), transparent 50%),
+    /* Subtle glow bottom-right */
+    radial-gradient(ellipse 60% 50% at 90% 90%, rgba(232, 93, 4, 0.04), transparent 40%),
+    var(--background);
 }
 
-/* Selection styling */
-::selection {
-  background: var(--leaf-tender);
-  color: var(--soil-deep);
+.admin-bg::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.admin-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(251, 146, 60, 0.08), transparent 50%),
+      radial-gradient(ellipse 60% 50% at 90% 90%, rgba(251, 146, 60, 0.05), transparent 40%),
+      var(--background);
+  }
+}
+
+/* Client dashboard - clean, professional gradient */
+.client-dashboard-gradient {
+  position: relative;
+  overflow-x: hidden;
+  background:
+    /* Soft warm glow from top-left */
+    radial-gradient(ellipse 100% 70% at 10% -10%, rgba(232, 93, 4, 0.08), transparent 50%),
+    /* Subtle cool accent for balance */
+    radial-gradient(ellipse 60% 40% at 95% 80%, rgba(59, 130, 246, 0.03), transparent 40%),
+    var(--background);
+}
+
+.client-dashboard-gradient::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.client-dashboard-gradient > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .client-dashboard-gradient {
+    background:
+      radial-gradient(ellipse 100% 70% at 10% -10%, rgba(251, 146, 60, 0.1), transparent 50%),
+      radial-gradient(ellipse 60% 40% at 95% 80%, rgba(96, 165, 250, 0.04), transparent 40%),
+      var(--background);
+  }
 }

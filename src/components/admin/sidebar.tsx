@@ -6,6 +6,7 @@ import { Cormorant_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/ui'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -69,7 +70,11 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="p-4 border-t border-[var(--border)]">
+      <div className="p-4 border-t border-[var(--border)] space-y-2">
+        <div className="flex items-center justify-between px-3 py-2">
+          <span className="text-sm text-[var(--muted)]">Theme</span>
+          <ThemeToggle />
+        </div>
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[var(--muted)] hover:bg-[var(--accent-light)] hover:text-[var(--foreground)] w-full transition-all duration-200"
