@@ -1,28 +1,24 @@
 import type { Metadata } from "next";
-import { DM_Sans, Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-const cormorantGaramond = Cormorant_Garamond({
+const dmSans = DM_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Ourchother | AI-Native Agency for Growth",
   description: "Multimodal agency providing AI-first consulting, strategic business guidance, and custom development. Growing abundant businesses together.",
-};
-
-// Export fonts for use in components
-export const fonts = {
-  sans: dmSans,
-  serif: cormorantGaramond,
 };
 
 export default function RootLayout({
@@ -31,8 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${cormorantGaramond.variable}`}>
-      <body className="antialiased">
+    <html lang="en">
+      <body
+        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
+        style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
+      >
         {children}
       </body>
     </html>
