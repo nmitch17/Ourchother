@@ -1,0 +1,10 @@
+{
+  "session_id": "06bc100d-7759-4e0c-b153-2e19a885027e",
+  "prompts": [
+    "Go to http://localhost:3002/onboarding/submissions/c58a2201-6bae-4f4a-afcf-65445313f2d8 and see that there are images submitted. The images when I click on them go to a URL that is a four oh four. Here is one of the URLs: http://localhost:3002/api/files/onboarding%2Fcyr5qi%2Finspiration_files%2Flv4210.jpg",
+    "Can you show these as clickable thumbnails? Instead of just raw text links to the URLs of the images?",
+    "/commit ",
+    "/pr ",
+    "There are merge conflicts. Pull main and resolve them here locally and then recreate the PR or update the PR."
+  ]
+}

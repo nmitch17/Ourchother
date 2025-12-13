@@ -1,0 +1,7 @@
+{
+  "session_id": "b8bc5302-687d-4bed-9ce2-1430a1308c5e",
+  "prompts": [
+    "Search the Official Anthropic Claude Docs about skills and revise this skill so that it is actually formatted as a skill. This is not the correct format. "
+  ],
+  "agent_name": "Nova"
+}

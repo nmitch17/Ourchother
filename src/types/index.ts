@@ -12,7 +12,7 @@ export type MilestoneStatus = 'upcoming' | 'in_progress' | 'complete' | 'blocked
 export type TaskStatus = 'todo' | 'in_progress' | 'complete' | 'blocked'
 export type ClientTaskPriority = 'high' | 'medium' | 'low'
 export type ClientTaskStatus = 'pending' | 'completed' | 'blocked'
-export type SubmissionStatus = 'pending' | 'reviewed' | 'imported'
+export type SubmissionStatus = 'pending' | 'reviewed' | 'converted'
 export type TransactionType = 'income' | 'expense'
 export type RevenueFrequency = 'monthly' | 'annual'
 
@@ -135,6 +135,19 @@ export interface OnboardingSubmission {
   // Relationships
   template?: OnboardingTemplate
   project?: Project
+}
+
+export interface OnboardingLink {
+  id: string
+  link_id: string // The unique ID in the URL (e.g., "0vqy4w")
+  template_id: string
+  project_id: string | null
+  submission_id: string | null // Set when form is submitted
+  created_at: string
+  // Relationships
+  template?: OnboardingTemplate
+  project?: Project
+  submission?: OnboardingSubmission
 }
 
 export interface Transaction {

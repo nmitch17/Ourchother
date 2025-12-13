@@ -1,0 +1,9 @@
+{
+  "session_id": "7e41e7e4-6f96-4303-a61c-45cb47f63a8e",
+  "prompts": [
+    "/start ",
+    "Can you adjust the Audio summary to run the tts script from .~/claude folder at the machine root? We moved it there.",
+    "Oh it probably can't access my .env.local elevenlabs key in this working directory from the root right?",
+    "Do 3"
+  ]
+}

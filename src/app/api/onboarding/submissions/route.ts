@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
       .from('onboarding_submissions')
       .insert({
         template_id: body.template_id,
+        project_id: body.project_id || null, // Pre-link to project if provided
         data: body.data,
         files: body.files || [],
         status: 'pending',
@@ -59,6 +60,14 @@ export async function POST(request: NextRequest) {
         { data: null, error: { code: 'DB_ERROR', message: error.message } },
         { status: 500 }
       )
+    }
+
+    // If there's a link_id, update the onboarding_link to reference this submission
+    if (body.link_id && data) {
+      await supabase
+        .from('onboarding_links')
+        .update({ submission_id: data.id })
+        .eq('link_id', body.link_id)
     }
 
     return NextResponse.json({ data, error: null })

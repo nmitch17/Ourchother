@@ -297,10 +297,10 @@ function ImportOnboardingModal({
         body: JSON.stringify({ submission_id: selectedId }),
       })
 
-      const { error } = await res.json()
+      const result = await res.json()
 
-      if (error) {
-        alert(error.message)
+      if (!res.ok || result.error) {
+        alert(result.error?.message || 'Failed to import onboarding data')
         return
       }
 
@@ -400,20 +400,70 @@ function OnboardingTab({
   project: Project
   onImport: () => void
 }) {
-  const submissions = project.onboarding_submissions || []
+  const [links, setLinks] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
 
-  if (submissions.length === 0) {
+  useEffect(() => {
+    fetchLinks()
+  }, [project.id])
+
+  const fetchLinks = async () => {
+    try {
+      const res = await fetch(`/api/onboarding/links?project_id=${project.id}`)
+      const { data } = await res.json()
+      setLinks(data || [])
+    } catch (err) {
+      console.error('Failed to fetch onboarding links:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const copyLink = async (link: any) => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
+    let url = `${baseUrl}/onboard/${link.template?.slug}/${link.link_id}`
+    if (link.project_id) {
+      url += `?project=${link.project_id}`
+    }
+
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopiedId(link.id)
+      setTimeout(() => setCopiedId(null), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-12">
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-accent"></div>
+      </div>
+    )
+  }
+
+  const awaitingLinks = links.filter(l => !l.submission_id)
+  const submittedLinks = links.filter(l => l.submission_id)
+
+  if (links.length === 0) {
     return (
       <Card>
         <CardContent className="py-12 text-center">
           <p className="text-4xl mb-4">📋</p>
-          <p className="text-gray-500 mb-2">No onboarding data imported</p>
+          <p className="text-gray-500 mb-2">No onboarding forms linked to this project</p>
           <p className="text-sm text-gray-400 mb-4">
-            Import data from an onboarding submission to view it here
+            Generate a pre-linked onboarding form or import an existing submission
           </p>
-          <Button variant="secondary" onClick={onImport}>
-            Import from Onboarding
-          </Button>
+          <div className="flex gap-2 justify-center">
+            <Link href="/onboarding/templates">
+              <Button>Generate Form Link</Button>
+            </Link>
+            <Button variant="secondary" onClick={onImport}>
+              Import Submission
+            </Button>
+          </div>
         </CardContent>
       </Card>
     )
@@ -421,66 +471,126 @@ function OnboardingTab({
 
   return (
     <div className="space-y-6">
-      {submissions.map((submission) => (
-        <Card key={submission.id}>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <h2 className="font-semibold">
-                {submission.template?.name || 'Onboarding Submission'}
-              </h2>
-              <p className="text-sm text-gray-500">
-                Submitted {formatRelativeTime(submission.submitted_at)}
-              </p>
-            </div>
-            <Link href={`/onboarding/submissions/${submission.id}`}>
-              <Button variant="ghost" size="sm">
-                View Full Submission →
-              </Button>
-            </Link>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 md:grid-cols-2">
-              {Object.entries(submission.data || {}).map(([key, value]) => (
-                <div key={key} className="space-y-1">
-                  <p className="text-sm font-medium text-gray-500 capitalize">
-                    {key.replace(/_/g, ' ')}
-                  </p>
-                  <p className="text-gray-900">
-                    {typeof value === 'object'
-                      ? JSON.stringify(value, null, 2)
-                      : String(value) || '—'}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {submission.files && submission.files.length > 0 && (
-              <div className="mt-6 pt-4 border-t">
-                <p className="text-sm font-medium text-gray-500 mb-2">Attached Files</p>
-                <ul className="space-y-1">
-                  {submission.files.map((file, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <span className="text-gray-400">📎</span>
+      {/* Awaiting Response Section */}
+      {awaitingLinks.length > 0 && (
+        <div>
+          <h3 className="text-sm font-medium text-gray-500 mb-3 uppercase tracking-wide">Awaiting Response</h3>
+          <div className="space-y-3">
+            {awaitingLinks.map((link) => (
+              <Card key={link.id} className="border-dashed">
+                <CardContent className="py-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{link.template?.name || 'Onboarding Form'}</span>
+                        <Badge variant="default">awaiting</Badge>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Created {formatRelativeTime(link.created_at)}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
                       <a
-                        href={`/api/files/${encodeURIComponent(file)}`}
+                        href={`/onboard/${link.template?.slug}/${link.link_id}?project=${link.project_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent hover:underline truncate"
                       >
-                        {file.split('/').pop()}
+                        <Button variant="secondary" size="sm">Open Form</Button>
                       </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+                      <Button variant="ghost" size="sm" onClick={() => copyLink(link)}>
+                        {copiedId === link.id ? 'Copied!' : 'Copy Link'}
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
-      <div className="text-center">
+      {/* Submitted Forms Section */}
+      {submittedLinks.length > 0 && (
+        <div>
+          <h3 className="text-sm font-medium text-gray-500 mb-3 uppercase tracking-wide">Submissions</h3>
+          <div className="space-y-4">
+            {submittedLinks.map((link) => {
+              const submission = link.submission
+              return (
+                <Card key={link.id}>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h2 className="font-semibold">
+                          {submission?.data?.client_name || link.template?.name || 'Onboarding Submission'}
+                        </h2>
+                        <Badge variant={
+                          submission?.status === 'converted' ? 'success' :
+                          submission?.status === 'reviewed' ? 'info' : 'warning'
+                        }>
+                          {submission?.status}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        Submitted {formatRelativeTime(submission?.submitted_at)}
+                      </p>
+                    </div>
+                    <Link href={`/onboarding/submissions/${submission?.id}`}>
+                      <Button variant="ghost" size="sm">
+                        View Full Submission →
+                      </Button>
+                    </Link>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {Object.entries(submission?.data || {}).slice(0, 6).map(([key, value]) => (
+                        <div key={key} className="space-y-1">
+                          <p className="text-sm font-medium text-gray-500 capitalize">
+                            {key.replace(/_/g, ' ')}
+                          </p>
+                          <p className="text-gray-900 truncate">
+                            {typeof value === 'object'
+                              ? JSON.stringify(value, null, 2)
+                              : String(value) || '—'}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {submission?.files && submission.files.length > 0 && (
+                      <div className="mt-4 pt-4 border-t">
+                        <p className="text-sm font-medium text-gray-500 mb-2">Attached Files</p>
+                        <ul className="space-y-1">
+                          {submission.files.map((file: string, i: number) => (
+                            <li key={i} className="flex items-center gap-2 text-sm">
+                              <span className="text-gray-400">📎</span>
+                              <a
+                                href={`/api/files/${encodeURIComponent(file)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-accent hover:underline truncate"
+                              >
+                                {file.split('/').pop()}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="flex gap-2 justify-center pt-4">
+        <Link href="/onboarding/templates">
+          <Button variant="secondary">Generate New Form Link</Button>
+        </Link>
         <Button variant="secondary" onClick={onImport}>
-          Import Another Submission
+          Import Existing Submission
         </Button>
       </div>
     </div>

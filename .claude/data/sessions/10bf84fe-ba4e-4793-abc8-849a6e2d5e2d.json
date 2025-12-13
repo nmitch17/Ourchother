@@ -1,0 +1,6 @@
+{
+  "session_id": "10bf84fe-ba4e-4793-abc8-849a6e2d5e2d",
+  "prompts": [
+    "Use the dev-browser to access the client dashboard at http://localhost:3002/project/test-project\\\n\\\nThe access password is test-project-4893\\\n\\\nThe design is boxed into a smaller portion of the screen. Make it consistent and not boxed in edge to edge.'/Users/nickmitchell/Library/Application Support/CleanShot/media/media_0swcs7nnpa/CleanShot 2025-12-12 at 11.25.16@2x.png'"
+  ]
+}

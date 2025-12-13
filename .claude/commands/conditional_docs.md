@@ -100,3 +100,12 @@ This prompt helps you determine what documentation you should read based on the 
     - When working with Iconify/Clarity icons
     - When updating fonts or typography
     - When modifying CSS animations in globals.css
+
+- app_docs/feature-ui-design-skill-landing-page.md
+  - Conditions:
+    - When working with the landing page (src/app/page.tsx)
+    - When modifying global CSS styles or design tokens
+    - When adding new animations or visual effects
+    - When working with typography (DM Sans, Cormorant Garamond)
+    - When creating sketch-style card components
+    - When updating the UI design skill guidelines

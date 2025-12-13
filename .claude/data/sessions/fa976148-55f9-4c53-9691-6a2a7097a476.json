@@ -1,0 +1,13 @@
+{
+  "session_id": "fa976148-55f9-4c53-9691-6a2a7097a476",
+  "prompts": [
+    " create a landing page at the root. This is for Our Each Other, which is a play on \"each other\" that my 3-year-old son used to say. He used to say \"our each other\" instead of \"each other\". That's the inspiration for this business. This is my business that supports my family. This is all just background. This is not necessary for the landing page design.\n\nWhat we are now is a multimodal agency that has its AI-first, AI-native consulting and strategic business work and custom development work. Make it a really beautiful array of light tan to medium colors, kind of an organic, like fertile green foliage growing out of the soil. That's what we're doing here. We're growing. We're helping people grow, giving them the resources that they need and the support that they need to grow into abundant, beautiful businesses and people and plants and yada yada. Go! ",
+    "create a landing page at the root. This is for Our Each Other, which is a play on \"each other\" that my 3-year-old son used to say. He used to say \"our each other\" instead of \"each \nother\". That's the inspiration for this business. This is my business that supports my family. This is all just background. This is not necessary for the landing page design.\n\nWhat we are now is a multimodal agency that has its AI-first, AI-native consulting and strategic business work and custom development work. Make it a really beautiful array of light tan to\n medium colors, kind of an organic, like fertile green foliage growing out of the soil. That's what we're doing here. We're growing. We're helping people grow, giving them the resources \nthat they need and the support that they need to grow into abundant, beautiful businesses and people and plants and yada yada. Go! Make sure to use the UI design skill. ",
+    "Use https://icon-sets.iconify.design/clarity/ instead of the current icons. Use line icons - this set has line and filled.\\\n\\\nMake the serveices cards two tone with organic shapes",
+    "For the h1, instead of part of the word one color, and another part a different color, lets make it a gradient from brown(left) to green(right). Make the gradient transition mainly around the \"ch\"",
+    "/document ",
+    "/pr ",
+    "commit and push another pr"
+  ],
+  "agent_name": "Atlas"
+}

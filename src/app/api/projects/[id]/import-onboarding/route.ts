@@ -28,8 +28,9 @@ export async function POST(
       .single()
 
     if (submissionError || !submission) {
+      console.error('Submission fetch error:', submissionError)
       return NextResponse.json(
-        { data: null, error: { code: 'NOT_FOUND', message: 'Submission not found' } },
+        { data: null, error: { code: 'NOT_FOUND', message: submissionError?.message || 'Submission not found' } },
         { status: 404 }
       )
     }
@@ -42,16 +43,25 @@ export async function POST(
       )
     }
 
+    // Check if already imported to another project
+    if (submission.project_id) {
+      return NextResponse.json(
+        { data: null, error: { code: 'ALREADY_IMPORTED', message: 'This submission has already been imported to another project' } },
+        { status: 400 }
+      )
+    }
+
     // Link the submission to the project and update status
     const { error: updateError } = await supabase
       .from('onboarding_submissions')
       .update({
         project_id: projectId,
-        status: 'imported',
+        status: 'converted',
       })
       .eq('id', submission_id)
 
     if (updateError) {
+      console.error('Update error:', updateError)
       return NextResponse.json(
         { data: null, error: { code: 'DB_ERROR', message: updateError.message } },
         { status: 500 }
@@ -70,8 +80,9 @@ export async function POST(
       error: null,
     })
   } catch (error) {
+    console.error('Import onboarding error:', error)
     return NextResponse.json(
-      { data: null, error: { code: 'SERVER_ERROR', message: 'Internal server error' } },
+      { data: null, error: { code: 'SERVER_ERROR', message: error instanceof Error ? error.message : 'Internal server error' } },
       { status: 500 }
     )
   }

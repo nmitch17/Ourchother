@@ -1,12 +1,18 @@
 import { cn } from '@/lib/utils'
 import { HTMLAttributes, forwardRef } from 'react'
 
-const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'sketch'
+}
+
+const Card = forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant = 'default', ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        'bg-white border border-gray-200 rounded-lg shadow-sm',
+        variant === 'sketch'
+          ? 'sketch-card'
+          : 'bg-[var(--surface)] border border-[var(--border)] rounded-xl',
         className
       )}
       {...props}
@@ -19,7 +25,7 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('p-4 border-b border-gray-200', className)}
+      className={cn('p-6 border-b border-[var(--border)]', className)}
       {...props}
     />
   )
@@ -28,7 +34,7 @@ CardHeader.displayName = 'CardHeader'
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4', className)} {...props} />
+    <div ref={ref} className={cn('p-6', className)} {...props} />
   )
 )
 CardContent.displayName = 'CardContent'

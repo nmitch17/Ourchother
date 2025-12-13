@@ -1,0 +1,16 @@
+{
+  "session_id": "783d7a4a-e227-452d-bd0b-cc7d3fd23e4f",
+  "prompts": [
+    "/document ",
+    "Extend the styling to make http://localhost:3002/onboard/web-design/cdg4hs really great and in line with the new stying",
+    "Extend the styling to all the dashboard as well",
+    "Do the dot grid background across all pages",
+    "Make the border color f0ebe1",
+    "Make surface #fffefd\\\n\\\nMake status tags more in line with complementary colors of the new style guide",
+    "I'm getting this on all pages of the dashboard: ## Error Type\nRuntime Error\n\n## Error Message\nundefined\n\nNext.js version: 16.0.7 (Turbopack)\n",
+    "I attempted to import onboarding to a project and I get this: '/Users/nickmitchell/Library/Application Support/CleanShot/media/media_zjx94r4eLj/CleanShot 2025-12-11 at 16.26.35@2x.png'",
+    "/restart ",
+    "Import this into the .claude/skills directory. https://github.com/SawyerHood/dev-browser/tree/82b390a6e17b19dacd0c3de42d86ba9cc666ccb1/skills/dev-browser"
+  ],
+  "agent_name": "Phoenix"
+}

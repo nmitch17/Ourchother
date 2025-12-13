@@ -1,0 +1,8 @@
+{
+  "session_id": "ca1c1019-3918-4405-994b-adc2d4a6a4d7",
+  "prompts": [
+    "/statusline ",
+    "I would like a statusline that displays:\\\nProject name (blue) | Running port # (if running - otherwise \"No port\") | Model (pink) | Tokens used in current context window (orange) | Summary of most recent prompt sent by user (gray) "
+  ],
+  "agent_name": "Nexus"
+}
