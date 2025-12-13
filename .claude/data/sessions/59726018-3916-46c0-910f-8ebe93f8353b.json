@@ -1,0 +1,10 @@
+{
+  "session_id": "59726018-3916-46c0-910f-8ebe93f8353b",
+  "prompts": [
+    "/statusline ",
+    "You attempted to create a custom setup in the previous session but it hasn't seemed to have worked. Why?",
+    "Are you stuck?",
+    "We also have this in @.claude/settings.local.json : \n  \"statusLine\": {\n    \"type\": \"command\",\n    \"command\": \"uv run .claude/status_lines/status_line_v3.py\",\n    \"padding\": 0\n  },\\\n\\\nShould I get rid of it?"
+  ],
+  "agent_name": "Nexus"
+}

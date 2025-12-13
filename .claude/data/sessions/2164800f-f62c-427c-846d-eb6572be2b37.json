@@ -1,0 +1,8 @@
+{
+  "session_id": "2164800f-f62c-427c-846d-eb6572be2b37",
+  "prompts": [
+    "hi",
+    "'/Users/nickmitchell/Library/Application Support/CleanShot/media/media_eO0JvDLBaG/CleanShot 2025-12-11 at 13.01.54@2x.png'\\\n\\\nCheck the status line code. I'm not seeing token usage updated in real time and just \"...\" in the last message field. It should be a summary of the last user prompt submitted. Also remove all the emojis to conserve horizontal space and declutter."
+  ],
+  "agent_name": "Quantum"
+}

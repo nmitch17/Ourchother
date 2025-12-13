@@ -1,0 +1,9 @@
+{
+  "session_id": "7635a08c-1ceb-4a0d-aeec-8ccb212f8ab3",
+  "prompts": [
+    "Make this client dashboard really beautiful. http://localhost:3002/project/shopify-website Use the new design system. Use the \"stitch outline\" cards that are on the home page and add some charts tastefully that capture the project status with minimal information overload. Create a new Gantt chart component that displays milestones. Make it beautiful and easy to digest using design system standards. Use the ui-design skill and the dev-browser skill. You can rearrange and modify existing elements and functionality to make an amazing beautiful dashboard that discloses just the right amount of info about the project to give the client everything they need without information overload or inducing the urge for the client to micromanage the work I'm doing. Think hard and deliver a perfectly elegant solution.",
+    "I fixed the claude hooks issue. Continue testing and adjusting using dev-browser",
+    "Give me a prompt to give a new instance of CLaude to continue this work to completion. I need to start a new session."
+  ],
+  "agent_name": "Vortex"
+}

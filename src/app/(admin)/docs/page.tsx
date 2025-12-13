@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Cormorant_Garamond } from 'next/font/google'
 import { Button, Card, CardHeader, CardContent, Input, Badge } from '@/components/ui'
 import { formatDate, formatRelativeTime } from '@/lib/utils'
 import type { Document, Project } from '@/types'
+
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
 
 interface DocumentWithProject extends Document {
   project?: Pick<Project, 'id' | 'name' | 'slug'> | null
@@ -128,18 +134,19 @@ export default function DocsPage() {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="animate-fade-in-up">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Documentation</h1>
-          <p className="text-gray-500 mt-1">Internal documentation and project files</p>
+          <p className="text-sm font-medium text-[var(--accent)] uppercase tracking-wide mb-1">Knowledge Base</p>
+          <h1 className={`${serif.className} text-3xl font-medium text-[var(--foreground)]`}>Documentation</h1>
+          <p className="text-[var(--muted)] mt-1">Internal documentation and project files</p>
         </div>
         <Button onClick={() => setShowNewDocForm(true)}>+ New Document</Button>
       </div>
@@ -147,8 +154,8 @@ export default function DocsPage() {
       {/* New Document Form */}
       {showNewDocForm && (
         <Card className="mb-6">
-          <CardContent className="py-4">
-            <h2 className="text-lg font-semibold mb-4">Create New Document</h2>
+          <CardContent className="py-5">
+            <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)] mb-4`}>Create New Document</h2>
             <form onSubmit={handleCreateDoc} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <Input
@@ -166,13 +173,13 @@ export default function DocsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
                   Link to Project (optional)
                 </label>
                 <select
                   value={newDoc.project_id}
                   onChange={(e) => setNewDoc({ ...newDoc, project_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  className="w-full px-4 py-3 border border-[var(--border)] rounded-lg text-sm bg-[var(--surface)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-shadow duration-200 cursor-pointer"
                 >
                   <option value="">No project (general documentation)</option>
                   {projects.map((project) => (
@@ -219,7 +226,12 @@ export default function DocsPage() {
       {filteredDocuments.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <p className="text-gray-500">
+            <div className="w-12 h-12 rounded-full bg-[var(--accent-light)] flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </div>
+            <p className="text-[var(--muted)]">
               {searchQuery ? 'No documents match your search' : 'No documents yet'}
             </p>
             {!searchQuery && (
@@ -238,18 +250,18 @@ export default function DocsPage() {
           {/* General Documents (not linked to any project) */}
           {unlinkedDocs.length > 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">General Documentation</h2>
+              <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)] mb-3`}>General Documentation</h2>
               <div className="space-y-2">
                 {unlinkedDocs.map((doc) => (
-                  <Card key={doc.id}>
-                    <CardContent className="py-3">
+                  <Card key={doc.id} className="hover:border-[var(--accent)] transition-all hover-lift">
+                    <CardContent className="py-4">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
-                          <h3 className="font-medium text-gray-900">{doc.title}</h3>
-                          <p className="text-sm text-gray-500 font-mono">{doc.path}</p>
+                          <h3 className="font-medium text-[var(--foreground)]">{doc.title}</h3>
+                          <p className="text-sm text-[var(--muted)] font-mono">{doc.path}</p>
                         </div>
                         <div className="flex items-center gap-4">
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-[var(--muted)]">
                             Updated {formatRelativeTime(doc.updated_at)}
                           </span>
                           <Button
@@ -273,22 +285,22 @@ export default function DocsPage() {
           {projectGroups.map(({ project, docs }) => (
             <div key={project.id}>
               <div className="flex items-center gap-3 mb-3">
-                <h2 className="text-lg font-semibold text-gray-900">{project.name}</h2>
+                <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)]`}>{project.name}</h2>
                 <Link href={`/projects/${project.id}`}>
                   <Badge variant="info">View Project</Badge>
                 </Link>
               </div>
               <div className="space-y-2">
                 {docs.map((doc) => (
-                  <Card key={doc.id}>
-                    <CardContent className="py-3">
+                  <Card key={doc.id} className="hover:border-[var(--accent)] transition-all hover-lift">
+                    <CardContent className="py-4">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
-                          <h3 className="font-medium text-gray-900">{doc.title}</h3>
-                          <p className="text-sm text-gray-500 font-mono">{doc.path}</p>
+                          <h3 className="font-medium text-[var(--foreground)]">{doc.title}</h3>
+                          <p className="text-sm text-[var(--muted)] font-mono">{doc.path}</p>
                         </div>
                         <div className="flex items-center gap-4">
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-[var(--muted)]">
                             Updated {formatRelativeTime(doc.updated_at)}
                           </span>
                           <Button
@@ -311,13 +323,17 @@ export default function DocsPage() {
       )}
 
       {/* Coming Soon Notice */}
-      <Card className="mt-6 bg-blue-50 border-blue-200">
+      <Card className="mt-6 bg-[var(--accent-light)] border-[var(--accent)]">
         <CardContent className="py-4">
           <div className="flex items-start gap-3">
-            <span className="text-2xl">&#9432;</span>
+            <div className="w-10 h-10 rounded-lg bg-[var(--surface)] flex items-center justify-center">
+              <svg className="w-5 h-5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+            </div>
             <div>
-              <h3 className="font-semibold text-blue-900">Markdown Editor Coming Soon</h3>
-              <p className="text-sm text-blue-700 mt-1">
+              <h3 className={`${serif.className} text-lg font-medium text-[var(--accent-text)]`}>Markdown Editor Coming Soon</h3>
+              <p className="text-sm text-[var(--muted)] mt-1">
                 A full-featured markdown editor with preview, auto-save, and document linking will be
                 available in a future update. For now, you can create and organize document entries.
               </p>

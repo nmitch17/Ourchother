@@ -1,0 +1,7 @@
+{
+  "session_id": "939f297d-854e-416e-9845-2ccfdd1e731c",
+  "prompts": [
+    "<bash-notification>\n<shell-id>405529</shell-id>\n<status>failed</status>\n<summary>Background command \"Check dev server status\" failed with exit code 137.</summary>\nUse BashOutput with bash_id=\"405529\" to retrieve the output.\n</bash-notification>",
+    "<bash-notification>\n<shell-id>7381f3</shell-id>\n<status>failed</status>\n<summary>Background command \"Check if dev server running\" failed with exit code 137.</summary>\nUse BashOutput with bash_id=\"7381f3\" to retrieve the output.\n</bash-notification>"
+  ]
+}

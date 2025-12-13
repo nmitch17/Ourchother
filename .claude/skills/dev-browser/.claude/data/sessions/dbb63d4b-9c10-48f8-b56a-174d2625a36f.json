@@ -1,0 +1,7 @@
+{
+  "session_id": "dbb63d4b-9c10-48f8-b56a-174d2625a36f",
+  "prompts": [
+    "In the web design project onboarding template, we need some additional fields. We need a field that is the project website address. I also need in the dashboard, we can't view onboarding forms that are created. We can't view those anymore until they're submitted, I think. Under each, whenever an onboarding form is linked to a project, under that project, we need to see the onboarding form and the status, whether it's been filled and submitted. Or if we're still waiting on the submission, if it's pending. In the onboarding tab, we should also be able to see all forms that have been created in all statuses, whether they've been filled out or not. And then I want to be able to view those through a link.",
+    "For some reason, when I select a dropdown, it is giant and off the window. Take a look at the screen shot.'/Users/nickmitchell/Library/Application Support/CleanShot/media/media_Uqya2KoydW/CleanShot 2025-12-12 at 16.27.47@2x.png'"
+  ]
+}

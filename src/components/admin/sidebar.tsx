@@ -2,9 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { Cormorant_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { Icon } from '@/components/ui'
+
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: 'home' },
@@ -27,10 +33,14 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen flex flex-col">
+    <aside className="w-64 bg-[var(--surface)] border-r border-[var(--border)] min-h-screen flex flex-col">
       {/* Logo */}
-      <div className="p-6 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-gray-900">OURCHOTHER</h1>
+      <div className="p-6 border-b border-[var(--border)]">
+        <Link href="/" className="block">
+          <h1 className={`${serif.className} text-2xl font-semibold text-[var(--foreground)] tracking-tight`}>
+            ourchother
+          </h1>
+        </Link>
       </div>
 
       {/* Navigation */}
@@ -43,13 +53,13 @@ export function Sidebar() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-accent-light text-accent-text'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-[var(--accent-light)] text-[var(--accent-text)]'
+                      : 'text-[var(--muted)] hover:bg-[var(--accent-light)] hover:text-[var(--foreground)]'
                   )}
                 >
-                  <Icon name={item.icon} />
+                  <Icon name={item.icon} className={isActive ? 'text-[var(--accent)]' : ''} />
                   {item.label}
                 </Link>
               </li>
@@ -59,10 +69,10 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-[var(--border)]">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 w-full"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[var(--muted)] hover:bg-[var(--accent-light)] hover:text-[var(--foreground)] w-full transition-all duration-200"
         >
           <Icon name="log-out" />
           Logout

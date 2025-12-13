@@ -2,10 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Cormorant_Garamond } from 'next/font/google'
 import { Button, Card, CardContent, Input } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import type { Client, Project } from '@/types'
 import { OURCHOTHER_CLIENT_ID } from '@/types'
+
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
 
 interface ClientWithProjects extends Client {
   projects?: Project[]
@@ -104,12 +110,13 @@ export default function ClientsPage() {
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return (
-    <div>
+    <div className="animate-fade-in-up">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clients</h1>
-          <p className="text-gray-500 mt-1">Manage your clients and view their projects</p>
+          <p className="text-sm font-medium text-[var(--accent)] uppercase tracking-wide mb-1">Management</p>
+          <h1 className={`${serif.className} text-3xl font-medium text-[var(--foreground)]`}>Clients</h1>
+          <p className="text-[var(--muted)] mt-1">Manage your clients and view their projects</p>
         </div>
         <Button onClick={() => setShowNewClientForm(true)}>+ New Client</Button>
       </div>
@@ -117,8 +124,8 @@ export default function ClientsPage() {
       {/* New Client Form */}
       {showNewClientForm && (
         <Card className="mb-6">
-          <CardContent className="py-4">
-            <h2 className="text-lg font-semibold mb-4">Add New Client</h2>
+          <CardContent className="py-5">
+            <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)] mb-4`}>Add New Client</h2>
             <form onSubmit={handleCreateClient} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <Input
@@ -175,12 +182,17 @@ export default function ClientsPage() {
       {/* Clients List */}
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
         </div>
       ) : filteredClients.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <p className="text-gray-500">
+            <div className="w-12 h-12 rounded-full bg-[var(--accent-light)] flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
+            </div>
+            <p className="text-[var(--muted)]">
               {searchQuery ? 'No clients match your search' : 'No clients yet'}
             </p>
             {!searchQuery && (
@@ -199,22 +211,22 @@ export default function ClientsPage() {
           {/* Ourchother (Internal) at top */}
           {ourchother && (
             <Link href={`/clients/${ourchother.id}`}>
-              <Card className="hover:border-accent transition-colors cursor-pointer bg-gray-50">
-                <CardContent className="py-4">
+              <Card className="hover:border-[var(--accent)] transition-all cursor-pointer bg-[var(--accent-light)] hover-lift">
+                <CardContent className="py-5">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                        <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)]`}>
                           {ourchother.name}
                         </h2>
-                        <span className="text-xs px-2 py-0.5 bg-gray-200 text-gray-600 rounded">
+                        <span className="text-xs px-2 py-0.5 bg-[var(--surface)] text-[var(--muted)] rounded-lg">
                           Internal
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500 mt-1">{ourchother.email}</p>
+                      <p className="text-sm text-[var(--muted)] mt-1">{ourchother.email}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-[var(--foreground)]">
                         {ourchother.projects?.length || 0} project
                         {(ourchother.projects?.length || 0) !== 1 ? 's' : ''}
                       </p>
@@ -228,24 +240,24 @@ export default function ClientsPage() {
           {/* Other clients */}
           {otherClients.map((client) => (
             <Link key={client.id} href={`/clients/${client.id}`}>
-              <Card className="hover:border-accent transition-colors cursor-pointer">
-                <CardContent className="py-4">
+              <Card className="hover:border-[var(--accent)] transition-all cursor-pointer hover-lift">
+                <CardContent className="py-5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900">{client.name}</h2>
-                      <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
+                      <h2 className={`${serif.className} text-xl font-medium text-[var(--foreground)]`}>{client.name}</h2>
+                      <div className="flex items-center gap-4 mt-1 text-sm text-[var(--muted)]">
                         <span>{client.email}</span>
                         {client.phone && <span>{client.phone}</span>}
                         {client.company && (
-                          <span className="text-gray-700 font-medium">{client.company}</span>
+                          <span className="text-[var(--foreground)] font-medium">{client.company}</span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-400 mt-2">
+                      <p className="text-xs text-[var(--muted)] mt-2">
                         Added {formatDate(client.created_at)}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-[var(--foreground)]">
                         {client.projects?.length || 0} project
                         {(client.projects?.length || 0) !== 1 ? 's' : ''}
                       </p>

@@ -1,0 +1,9 @@
+{
+  "session_id": "eb34ec04-bedb-424b-ba37-3e169a05029a",
+  "prompts": [
+    "Import this into the .claude/skills directory. https://github.com/SawyerHood/dev-browser/tree/82b390a6e17b19dacd0c3de42d86ba9cc666ccb1/skills/dev-browser",
+    " /exit",
+    "<bash-notification>\n<shell-id>d0f6b5</shell-id>\n<status>killed</status>\n<summary>Background command \"Start dev server on port 3002\" was killed.</summary>\nUse BashOutput with bash_id=\"d0f6b5\" to retrieve the output.\n</bash-notification>"
+  ],
+  "agent_name": "Catalyst"
+}

@@ -1,18 +1,21 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button, Card, CardHeader, CardContent, Badge, Input } from '@/components/ui'
+import { Button, Card, CardHeader, CardContent, Badge, Input, Select } from '@/components/ui'
 import { formatDate, generateId } from '@/lib/utils'
-import type { OnboardingTemplate } from '@/types'
+import type { OnboardingTemplate, Project } from '@/types'
 
 export default function OnboardingTemplatesPage() {
   const [templates, setTemplates] = useState<OnboardingTemplate[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [generatedLinks, setGeneratedLinks] = useState<Record<string, string>>({})
+  const [selectedProject, setSelectedProject] = useState<string>('')
 
   useEffect(() => {
     fetchTemplates()
+    fetchProjects()
   }, [])
 
   const fetchTemplates = async () => {
@@ -37,10 +40,41 @@ export default function OnboardingTemplatesPage() {
     }
   }
 
-  const generateLink = (template: OnboardingTemplate) => {
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch('/api/projects')
+      const { data } = await res.json()
+      if (data) {
+        setProjects(data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch projects:', err)
+    }
+  }
+
+  const generateLink = async (template: OnboardingTemplate, projectId?: string) => {
     const uniqueId = generateId()
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-    const link = `${baseUrl}/onboard/${template.slug}/${uniqueId}`
+    let link = `${baseUrl}/onboard/${template.slug}/${uniqueId}`
+    if (projectId) {
+      link += `?project=${projectId}`
+    }
+
+    // Save the link to the database
+    try {
+      await fetch('/api/onboarding/links', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          link_id: uniqueId,
+          template_id: template.id,
+          project_id: projectId || null,
+        }),
+      })
+    } catch (err) {
+      console.error('Failed to save link:', err)
+    }
+
     setGeneratedLinks((prev) => ({ ...prev, [template.id]: link }))
     return link
   }
@@ -84,6 +118,27 @@ export default function OnboardingTemplatesPage() {
             tracks submissions separately.
           </p>
 
+          {/* Project Selector */}
+          <div className="mb-4 p-3 bg-white rounded-lg border border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Pre-link to Project (Optional)
+            </label>
+            <Select
+              value={selectedProject}
+              onChange={(e) => setSelectedProject(e.target.value)}
+              options={[
+                { value: '', label: 'No project - blank form' },
+                ...projects.map((p) => ({ value: p.id, label: `${p.name}${p.client?.name ? ` (${p.client.name})` : ''}` })),
+              ]}
+              placeholder="Select a project to pre-fill client info"
+            />
+            {selectedProject && (
+              <p className="text-xs text-accent mt-2">
+                The form will be pre-filled with client name, email, company, and project details.
+              </p>
+            )}
+          </div>
+
           {templates.map((template) => (
             <div key={template.id} className="flex items-center gap-3">
               <span className="text-sm font-medium text-gray-700">{template.name}:</span>
@@ -100,12 +155,12 @@ export default function OnboardingTemplatesPage() {
                   >
                     {copiedId === template.id ? 'Copied!' : 'Copy'}
                   </Button>
-                  <Button variant="secondary" onClick={() => generateLink(template)}>
+                  <Button variant="secondary" onClick={() => generateLink(template, selectedProject || undefined)}>
                     New Link
                   </Button>
                 </div>
               ) : (
-                <Button onClick={() => generateLink(template)}>Generate Link</Button>
+                <Button onClick={() => generateLink(template, selectedProject || undefined)}>Generate Link</Button>
               )}
             </div>
           ))}

@@ -91,3 +91,12 @@ This prompt helps you determine what documentation you should read based on the 
     - When working with the OURCHOTHER_CLIENT_ID constant
     - When running database migrations for the projects table
     - When troubleshooting project client_id validation errors
+
+- app_docs/feature-ui-design-skill-landing-page.md
+  - Conditions:
+    - When working with the landing page (src/app/page.tsx)
+    - When modifying global CSS styles or design tokens
+    - When adding new animations or visual effects
+    - When working with typography (DM Sans, Cormorant Garamond)
+    - When creating sketch-style card components
+    - When updating the UI design skill guidelines
