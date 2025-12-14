@@ -109,3 +109,13 @@ This prompt helps you determine what documentation you should read based on the 
     - When working with typography (DM Sans, Cormorant Garamond)
     - When creating sketch-style card components
     - When updating the UI design skill guidelines
+
+- app_docs/feature-dark-mode-toggle.md
+  - Conditions:
+    - When working with theme/dark mode functionality
+    - When modifying ThemeProvider or ThemeToggle components
+    - When adding CSS custom properties or color variables
+    - When working with localStorage theme persistence
+    - When integrating theme toggle into new pages or components
+    - When modifying the proxy/middleware route protection logic
+    - When troubleshooting route redirects to /login
