@@ -7,26 +7,30 @@ import { NextResponse, type NextRequest } from 'next/server'
  * for cookie existence. Full session validation happens in server components
  * and API routes. This is the recommended pattern for Next.js 16+.
  *
+ * Only (admin) routes under /dashboard are protected. All other routes are public.
+ *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/proxy
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Define public routes that don't require auth
-  const publicRoutes = [
-    '/login',
-    '/onboard',
-    '/project',
-    '/api/onboarding/templates',
-    '/api/onboarding/submissions',
-    '/api/onboarding/upload',
-    '/api/client-dashboard',
-  ]
+  // Only protect admin routes (dashboard)
+  // All other routes are public by default
+  const protectedRoutes = ['/dashboard']
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
 
-  // Check if the current path starts with any public route
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
-
-  if (isPublicRoute) {
+  // If not a protected route, allow access
+  if (!isProtectedRoute) {
+    // Special case: redirect authenticated users from /login to /dashboard
+    if (pathname === '/login') {
+      const hasAuthCookie = request.cookies.has('sb-access-token') ||
+                            request.cookies.getAll().some(cookie =>
+                              cookie.name.startsWith('sb-') && cookie.name.includes('-auth-token')
+                            )
+      if (hasAuthCookie) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
+    }
     return NextResponse.next()
   }
 
@@ -38,13 +42,8 @@ export function proxy(request: NextRequest) {
                         )
 
   // Redirect to login if no auth cookie present
-  if (!hasAuthCookie && !pathname.startsWith('/login')) {
+  if (!hasAuthCookie) {
     return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // Redirect to dashboard if auth cookie exists and trying to access login
-  if (hasAuthCookie && pathname === '/login') {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return NextResponse.next()
